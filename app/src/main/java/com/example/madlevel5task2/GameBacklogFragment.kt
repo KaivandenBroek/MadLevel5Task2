@@ -26,6 +26,7 @@ class GameBacklogFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
 
         fab.setOnClickListener {
             findNavController().navigate(R.id.action_gameBacklogFragment_to_addGameFragment)
@@ -33,7 +34,7 @@ class GameBacklogFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_addgame, menu)
+        inflater.inflate(R.menu.menu_gamebacklog, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

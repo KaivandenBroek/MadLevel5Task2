@@ -22,6 +22,7 @@ class AddGameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
 
         fab2.setOnClickListener {
             findNavController().navigate(R.id.action_addGameFragment_to_gameBacklogFragment)
