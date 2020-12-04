@@ -21,12 +21,12 @@ class GameViewModel(application: Application) : AndroidViewModel(application){
     val error = MutableLiveData<String>()
     val success = MutableLiveData<Boolean>()
 
-    fun updateNote(title: String, text: String) {
+    fun updateNote(title: String, platform: String) {
 
         //if there is an existing note, take that id to update it instead of adding a new one
         val newNote = Game(
                 title = title,
-                platform = text,
+                platform = platform,
                 releaseDate = Date()
         )
 

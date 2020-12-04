@@ -9,7 +9,7 @@
     <string name="no_warning">no warning string</string>
     <string name="backlogmenuitem">no warning string</string>
     <string name="addmenuitem">no warning string</string>
-    <string name="game_name">no warning string</string>
+    <string name="title">no warning string</string>
     <string name="platform">no warning string</string>
     <string name="date">no warning string</string>
     <string name="release">Release: %1$s</string>
