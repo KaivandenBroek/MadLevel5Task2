@@ -52,6 +52,6 @@ class AddGameFragment : Fragment() {
     }
 
     private fun saveGame() {
-        viewModel.updateNote(tvGameName.text.toString(), tvPlatform.text.toString())
+        viewModel.updateNote(tfAddTitle.toString(), tfAddPlatform.toString())
     }
 }

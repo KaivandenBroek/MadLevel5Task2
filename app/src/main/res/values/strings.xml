@@ -9,11 +9,8 @@
     <string name="no_warning">no warning string</string>
     <string name="backlogmenuitem">no warning string</string>
     <string name="addmenuitem">no warning string</string>
-    <string name="title">no warning string</string>
-    <string name="platform">no warning string</string>
-    <string name="date">no warning string</string>
+    <string name="title">Title</string>
+    <string name="platform">Platform</string>
+    <string name="date">Day</string>
     <string name="release">Release: %1$s</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
