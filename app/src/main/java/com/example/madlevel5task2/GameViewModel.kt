@@ -1,6 +1,7 @@
 package com.example.madlevel5task2
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.madlevel5task2.model.Game
@@ -21,14 +22,15 @@ class GameViewModel(application: Application) : AndroidViewModel(application){
     val error = MutableLiveData<String>()
     val success = MutableLiveData<Boolean>()
 
-    fun updateNote(title: String, platform: String) {
+    fun updateNote(title: String, platform: String, date: Date) {
 
         //if there is an existing note, take that id to update it instead of adding a new one
         val newNote = Game(
                 title = title,
                 platform = platform,
-                releaseDate = Date()
+                releaseDate = date
         )
+        Log.v("test" , title)
 
         if(isGameValid(newNote)) {
             mainScope.launch {

@@ -45,7 +45,6 @@ class GameBacklogFragment : Fragment() {
     private fun initViews() {
         rvGames.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         rvGames.adapter = gamesListAdapter
-
     }
 
 
