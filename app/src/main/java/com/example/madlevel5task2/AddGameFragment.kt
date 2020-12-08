@@ -1,14 +1,13 @@
 package com.example.madlevel5task2
 
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.text.Editable
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_add_game.*
-import kotlinx.android.synthetic.main.game_card.*
-import java.lang.Long.parseLong
+import java.text.ParseException
 import java.util.*
 
 /**
@@ -31,11 +30,9 @@ class AddGameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-
-
         fab2.setOnClickListener {
-            findNavController().navigate(R.id.action_addGameFragment_to_gameBacklogFragment)
             saveGame()
+            findNavController().navigate(R.id.action_addGameFragment_to_gameBacklogFragment)
         }
     }
 
@@ -55,10 +52,26 @@ class AddGameFragment : Fragment() {
     }
 
     private fun saveGame() {
-        //
-        val stringDate: String = tfAddDay.text.toString() + tfAddDay.text.toString() + tfAddDay.text.toString()
-        val longDate: Long = parseLong(stringDate, 10)
-        val date = Date(longDate)
-        viewModel.updateNote(tfAddTitle.text.toString(), tfAddPlatform.text.toString(), date)
+        val stringDate: String = tfAddDay.text.toString() +"-" +
+                tfAddMonth.text.toString()+"-" + tfAddYear.text.toString()
+        val date: Date
+//        val df = SimpleDateFormat("dd-mm-yyyy", Locale.UK)
+//        val date: Date? = df.parse(stringDate)
+        date = screwDates(stringDate)
+//        try { // date validator
+//            val date:Date = df.parse(stringDate)
+//        } catch (e: ParseException) {
+//            //TODO SNACKBAR error
+//            Log.e(e.toString(), "NOT LEGAL DATE")
+//        }
+
+            viewModel.addGame(tfAddTitle.text.toString(), tfAddPlatform.text.toString(), date)
+
+    }
+
+    @Throws(ParseException::class)
+    fun screwDates(dateStr: String): Date {
+        val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        return formatter.parse(dateStr)
     }
 }

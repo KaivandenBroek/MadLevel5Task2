@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "GameTable")
-data class Game (
+data class Game(
 
         @ColumnInfo(name = "title")
         var title: String,

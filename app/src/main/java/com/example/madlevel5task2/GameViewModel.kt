@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
 import java.util.*
 
 class GameViewModel(application: Application) : AndroidViewModel(application){
@@ -19,23 +20,24 @@ class GameViewModel(application: Application) : AndroidViewModel(application){
 
     val games = gameRepository.getGames()
 
-    val error = MutableLiveData<String>()
-    val success = MutableLiveData<Boolean>()
+    private val error = MutableLiveData<String>()
+    private val success = MutableLiveData<Boolean>()
 
-    fun updateNote(title: String, platform: String, date: Date) {
+    fun addGame(title: String, platform: String, date: Date) {
 
         //if there is an existing note, take that id to update it instead of adding a new one
-        val newNote = Game(
+        val newGame = Game(
                 title = title,
                 platform = platform,
                 releaseDate = date
         )
-        Log.v("test" , title)
+        Log.v("date-test" , date.toString())
 
-        if(isGameValid(newNote)) {
+        if(isGameValid(newGame)) {
             mainScope.launch {
                 withContext(Dispatchers.IO) {
-                    gameRepository.updateNotepad(newNote)
+                    gameRepository.addGameBacklog(newGame)
+                    Log.i("database", "added game to database: $newGame")
                 }
                 success.value = true
             }
@@ -45,7 +47,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application){
     private fun isGameValid(game: Game): Boolean {
         return when {
             game.title.isBlank() -> {
-                error.value = "Title game must not be empty"
+                error.value = "Please fill in a title"
                 false
             }
             else -> true

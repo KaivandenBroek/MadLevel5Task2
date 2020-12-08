@@ -6,15 +6,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.madlevel5task2.model.Game
 import kotlinx.android.synthetic.main.game_card.view.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
-class GamesListAdapter(private val games: List<Game>) :
+class GamesListAdapter(private val games: ArrayList<Game>) :
     RecyclerView.Adapter<GamesListAdapter.ViewHolder>()
 {
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            fun databind(game : Game) {
+            fun bind(game : Game) {
                 itemView.tvGameName.text = game.title
                 itemView.tvPlatform.text = game.platform
-                itemView.tvReleaseDate.text = game.releaseDate.toString()
+                val format = SimpleDateFormat("dd-MM-yyy")
+
+                itemView.tvReleaseDate.text = format.format(game.releaseDate)
+
             }
         }
 
@@ -35,6 +41,6 @@ class GamesListAdapter(private val games: List<Game>) :
      * Called by RecyclerView to display the data at the specified position.
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.databind(games[position])
+        holder.bind(games[position])
     }
 }
