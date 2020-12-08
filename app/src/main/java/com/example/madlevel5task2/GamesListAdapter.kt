@@ -11,22 +11,21 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class GamesListAdapter(private val games: ArrayList<Game>) :
-    RecyclerView.Adapter<GamesListAdapter.ViewHolder>()
-{
-        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            fun bind(game : Game) {
-                itemView.tvGameName.text = game.title
-                itemView.tvPlatform.text = game.platform
-                val format = SimpleDateFormat("dd-MM-yyy")
+    RecyclerView.Adapter<GamesListAdapter.ViewHolder>() {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(game: Game) {
+            itemView.tvGameName.text = game.title
+            itemView.tvPlatform.text = game.platform
+            val format = SimpleDateFormat("dd MMM yyyy")
 
-                itemView.tvReleaseDate.text = format.format(game.releaseDate)
+            itemView.tvReleaseDate.text = format.format(game.releaseDate)
 
-            }
         }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GamesListAdapter.ViewHolder {
         return ViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.game_card, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.game_card, parent, false)
         )
     }
 

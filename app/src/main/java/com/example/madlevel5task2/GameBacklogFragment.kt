@@ -22,12 +22,13 @@ import kotlinx.coroutines.withContext
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class GameBacklogFragment : Fragment() {
-    private val mainScope = CoroutineScope(Dispatchers.Main)
     private lateinit var gameRepository: GameRepository
-    private val viewModel: GameViewModel by viewModels()
-    private val games = arrayListOf<Game>()
-    private val gamesListAdapter = GamesListAdapter(games)
+    private lateinit var games: ArrayList<Game>
+    private lateinit var gamesListAdapter: GamesListAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
+
+    private val viewModel: GameViewModel by viewModels()
+//    private val gamesListAdapter = GamesListAdapter(games)
     /*
     De games word aangepast bij het aanmaken van de fragment,
     maar games.add is unreachable omdat die pas in de observer word aangeroepen
@@ -35,8 +36,8 @@ class GameBacklogFragment : Fragment() {
      */
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         activity?.setTitle(R.string.app_name)
@@ -57,6 +58,10 @@ class GameBacklogFragment : Fragment() {
     }
 
     private fun initViews() {
+        games = arrayListOf()
+
+        gamesListAdapter = GamesListAdapter(games)
+
         viewManager = LinearLayoutManager(activity)
         rvGames.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         rvGames.adapter = gamesListAdapter
@@ -65,20 +70,15 @@ class GameBacklogFragment : Fragment() {
 
     private fun observeAddGameResult() {
         viewModel.games.observe(viewLifecycleOwner, { game ->
-            game?.let {
-                mainScope.launch {
-                    val allGames = withContext(Dispatchers.IO) {
-                        gameRepository.getGames()
-                    }
-                Log.v("Oberserved!", "")
-                    //games.clear()
-                    games.add(game)
-                    //games.addAll(allGames)
-                    games.sortByDescending { it.releaseDate } // sort by date
-                    gamesListAdapter.notifyDataSetChanged()
-                }
-            }
+            games.clear()
+            games.addAll(game)
+            gamesListAdapter.notifyDataSetChanged()
         })
+    }
+
+    private fun deleteAllGames() {
+        viewModel.deleteAllGames()
+        gamesListAdapter.notifyDataSetChanged()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -97,12 +97,4 @@ class GameBacklogFragment : Fragment() {
         }
     }
 
-    private fun deleteAllGames() {
-        mainScope.launch {
-            games.clear()
-            gameRepository.deleteAllGames()
-            gamesListAdapter.notifyDataSetChanged()
-        }
-        Log.v("ALL GONE", "")
-    }
 }

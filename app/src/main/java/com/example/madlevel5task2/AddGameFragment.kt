@@ -6,6 +6,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.madlevel5task2.model.Game
 import kotlinx.android.synthetic.main.fragment_add_game.*
 import java.text.ParseException
 import java.util.*
@@ -16,10 +17,11 @@ import java.util.*
 class AddGameFragment : Fragment() {
 
     private val viewModel: GameViewModel by viewModels()
+    private val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         activity?.setTitle(R.string.add_name)
@@ -52,12 +54,12 @@ class AddGameFragment : Fragment() {
     }
 
     private fun saveGame() {
-        val stringDate: String = tfAddDay.text.toString() +"-" +
-                tfAddMonth.text.toString()+"-" + tfAddYear.text.toString()
+        val stringDate: String = tfAddDay.text.toString() + "-" +
+                tfAddMonth.text.toString() + "-" + tfAddYear.text.toString()
         val date: Date
 //        val df = SimpleDateFormat("dd-mm-yyyy", Locale.UK)
 //        val date: Date? = df.parse(stringDate)
-        date = screwDates(stringDate)
+        date = formatter.parse(stringDate)
 //        try { // date validator
 //            val date:Date = df.parse(stringDate)
 //        } catch (e: ParseException) {
@@ -65,13 +67,13 @@ class AddGameFragment : Fragment() {
 //            Log.e(e.toString(), "NOT LEGAL DATE")
 //        }
 
-            viewModel.addGame(tfAddTitle.text.toString(), tfAddPlatform.text.toString(), date)
+        val game = Game(
+            title = tfAddTitle.text.toString(),
+            platform = tfAddPlatform.text.toString(),
+            releaseDate = date
+        )
 
-    }
+        viewModel.addGame(game)
 
-    @Throws(ParseException::class)
-    fun screwDates(dateStr: String): Date {
-        val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        return formatter.parse(dateStr)
     }
 }
