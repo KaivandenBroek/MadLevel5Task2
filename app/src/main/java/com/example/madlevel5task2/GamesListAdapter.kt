@@ -1,24 +1,29 @@
 package com.example.madlevel5task2
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.madlevel5task2.model.Game
 import kotlinx.android.synthetic.main.game_card.view.*
+import java.security.AccessController.getContext
 import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
-class GamesListAdapter(private val games: ArrayList<Game>) :
+class GamesListAdapter(private val games: ArrayList<Game>, val context: Context) :
     RecyclerView.Adapter<GamesListAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("SimpleDateFormat")
         fun bind(game: Game) {
             itemView.tvGameName.text = game.title
             itemView.tvPlatform.text = game.platform
             val format = SimpleDateFormat("dd MMM yyyy")
-
-            itemView.tvReleaseDate.text = format.format(game.releaseDate)
+            val date = format.format(game.releaseDate)
+            itemView.tvReleaseDate.text = context.getString(R.string.release, date.toString())
+            //itemView.tvReleaseDate.text = getContext().getString(R.string.release, date.toString())
 
         }
     }

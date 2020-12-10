@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.madlevel5task2.model.Game
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_add_game.*
 import java.text.ParseException
 import java.util.*
@@ -33,9 +34,20 @@ class AddGameFragment : Fragment() {
         setHasOptionsMenu(true)
 
         fab2.setOnClickListener {
-            saveGame()
-            findNavController().navigate(R.id.action_addGameFragment_to_gameBacklogFragment)
+            if(validateFields()) {
+                saveGame()
+                findNavController().navigate(R.id.action_addGameFragment_to_gameBacklogFragment)
+            }
         }
+    }
+
+    private fun validateFields(): Boolean {
+        if (tfAddTitle == null) {
+            Snackbar.make(requireView(), R.string.noTitle, Snackbar.LENGTH_SHORT)
+                .show()
+            return false
+        }
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
