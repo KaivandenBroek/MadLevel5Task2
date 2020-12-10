@@ -5,11 +5,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.madlevel5task2.model.Game
 import kotlinx.android.synthetic.main.game_card.view.*
-import java.security.AccessController.getContext
 import java.text.SimpleDateFormat
 import kotlin.collections.ArrayList
 
@@ -23,8 +21,6 @@ class GamesListAdapter(private val games: ArrayList<Game>, val context: Context)
             val format = SimpleDateFormat("dd MMM yyyy")
             val date = format.format(game.releaseDate)
             itemView.tvReleaseDate.text = context.getString(R.string.release, date.toString())
-            //itemView.tvReleaseDate.text = getContext().getString(R.string.release, date.toString())
-
         }
     }
 

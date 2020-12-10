@@ -42,8 +42,20 @@ class AddGameFragment : Fragment() {
     }
 
     private fun validateFields(): Boolean {
-        if (tfAddTitle == null) {
+        if (tfAddTitle.text.isNullOrEmpty()) {
             Snackbar.make(requireView(), R.string.noTitle, Snackbar.LENGTH_SHORT)
+                .show()
+            return false
+        }
+
+        if (tfAddPlatform.text.isNullOrEmpty()) {
+            Snackbar.make(requireView(), R.string.noPlatform, Snackbar.LENGTH_SHORT)
+                .show()
+            return false
+        }
+        if(tfAddDay.text.isNullOrEmpty() || tfAddMonth.text.isNullOrEmpty() ||
+            tfAddYear.text.isNullOrEmpty() || tfAddMonth.text.toString().toInt() > 12) {
+            Snackbar.make(requireView(), R.string.noValidDate, Snackbar.LENGTH_SHORT)
                 .show()
             return false
         }
@@ -68,16 +80,9 @@ class AddGameFragment : Fragment() {
     private fun saveGame() {
         val stringDate: String = tfAddDay.text.toString() + "-" +
                 tfAddMonth.text.toString() + "-" + tfAddYear.text.toString()
+
         val date: Date
-//        val df = SimpleDateFormat("dd-mm-yyyy", Locale.UK)
-//        val date: Date? = df.parse(stringDate)
         date = formatter.parse(stringDate)
-//        try { // date validator
-//            val date:Date = df.parse(stringDate)
-//        } catch (e: ParseException) {
-//            //TODO SNACKBAR error
-//            Log.e(e.toString(), "NOT LEGAL DATE")
-//        }
 
         val game = Game(
             title = tfAddTitle.text.toString(),
@@ -86,6 +91,5 @@ class AddGameFragment : Fragment() {
         )
 
         viewModel.addGame(game)
-
     }
 }

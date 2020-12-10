@@ -7,13 +7,18 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="no_warning">no warning string</string>
-    <string name="backlogmenuitem">no warning string</string>
-    <string name="addmenuitem">no warning string</string>
+    <string name="backLogMenuItem">no warning string</string>
+    <string name="addMenuItem">no warning string</string>
     <string name="title">Title</string>
     <string name="platform">Platform</string>
     <string name="day">Day</string>
     <string name="month">Month</string>
     <string name="year">Year</string>
+    <string name="undo">UNDO</string>
     <string name="release">Release: %1$s</string>
     <string name="noTitle">Please fill in a title</string>
+    <string name="noPlatform">Please fill in a platform</string>
+    <string name="noValidDate">Please fill in valid date.</string>
+    <string name="successDelete">Successfully deleted backlog</string>
+    <string name="successDeleteSingle">Successfully deleted game</string>
 </resources>

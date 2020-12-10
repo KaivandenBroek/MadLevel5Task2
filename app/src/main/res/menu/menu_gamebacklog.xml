@@ -6,6 +6,6 @@
     <item
         android:id="@+id/action_backlog"
         android:icon="@android:drawable/ic_menu_delete"
-        android:title="@string/backlogmenuitem"
+        android:title="@string/backLogMenuItem"
         app:showAsAction="always"/>
 </menu>

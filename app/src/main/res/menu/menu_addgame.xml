@@ -6,6 +6,6 @@
     <item
         android:id="@+id/back_added"
         android:icon="@drawable/abc_vector_test"
-        android:title="@string/addmenuitem"
+        android:title="@string/addMenuItem"
         app:showAsAction="always" />
 </menu>

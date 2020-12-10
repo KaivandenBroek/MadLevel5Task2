@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.madlevel5task2.model.Game
 import com.example.madlevel5task2.repository.GameRepository
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_game_backlog.*
 
 /**
@@ -73,8 +74,22 @@ class GameBacklogFragment : Fragment() {
     }
 
     private fun deleteAllGames() {
+
+        val tmp = games // store games for undo
         viewModel.deleteAllGames()
+        games.clear()
         gamesListAdapter.notifyDataSetChanged()
+        Snackbar.make(requireView(), R.string.successDelete, Snackbar.LENGTH_LONG)
+            .setAction(R.string.undo) { // undo delete TODO doesn't work correctly
+                //viewModel.games.observe(viewLifecycleOwner, {
+                    games.addAll(tmp)
+                    for (g in games.listIterator()) {
+                        viewModel.addGame(g)
+                    }
+                    gamesListAdapter.notifyDataSetChanged()
+                //})
+            }
+            .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -120,6 +135,15 @@ class GameBacklogFragment : Fragment() {
                 games.removeAt(position)
                 viewModel.deleteGame(gameToDelete)
                 gamesListAdapter.notifyDataSetChanged()
+
+                Snackbar.make(requireView(), R.string.successDeleteSingle, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.undo) { // undo delete
+                        games.add(gameToDelete)
+                        viewModel.addGame(gameToDelete)
+                        gamesListAdapter.notifyDataSetChanged()
+                    }
+                    .show()
+
             }
         }
         return ItemTouchHelper(callback)
