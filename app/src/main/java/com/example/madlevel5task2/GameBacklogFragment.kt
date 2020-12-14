@@ -23,12 +23,6 @@ class GameBacklogFragment : Fragment() {
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     private val viewModel: GameViewModel by viewModels()
-//    private val gamesListAdapter = GamesListAdapter(games)
-    /*
-    De games word aangepast bij het aanmaken van de fragment,
-    maar games.add is unreachable omdat die pas in de observer word aangeroepen
-    dus, moet ik van games de livedata maken? idk want die kan ik niet aanpassen
-     */
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,19 +69,18 @@ class GameBacklogFragment : Fragment() {
 
     private fun deleteAllGames() {
 
-        val tmp = games // store games for undo
+        val tmp = ArrayList<Game>() // store games for undo
+        tmp.addAll(games)
+
         viewModel.deleteAllGames()
-        games.clear()
         gamesListAdapter.notifyDataSetChanged()
+
         Snackbar.make(requireView(), R.string.successDelete, Snackbar.LENGTH_LONG)
-            .setAction(R.string.undo) { // undo delete TODO doesn't work correctly
-                //viewModel.games.observe(viewLifecycleOwner, {
-                    games.addAll(tmp)
-                    for (g in games.listIterator()) {
-                        viewModel.addGame(g)
+            .setAction(R.string.undo) { // undo delete
+                    tmp.forEach {
+                        viewModel.addGame(it)
                     }
-                    gamesListAdapter.notifyDataSetChanged()
-                //})
+
             }
             .show()
     }
